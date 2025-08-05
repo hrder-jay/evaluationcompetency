@@ -86,7 +86,7 @@ canvas { max-width: 100%; margin-top: 20px; }
     <button class="btn-no" onclick="answer(this,0)">No</button>
   </div>
   <div class="question" data-category="면담스킬">
-    12. 저항이 두려워 면담을 피한 적이 있나요? (Yes=부족)<br>
+    12. 저항이 두려워 면담을 피한 적이 있나요?<br>
     <button class="btn-yes" onclick="answer(this,0)">Yes</button>
     <button class="btn-no" onclick="answer(this,1)">No</button>
   </div>
