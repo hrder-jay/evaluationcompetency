@@ -201,9 +201,9 @@
     <div class="question" data-category="면담스킬">
       <img class="icon" src="https://img.icons8.com/color/24/chat.png" alt="면담스킬"/>
       <div class="text">
-        12. 저항이 두려워 면담을 피한 적이 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,0)">Yes</button>
-        <button class="btn-no" onclick="answer(this,1)">No</button>
+        12. 팀원과의 면담 상황에 대한 두려움은 없으신가요??<br>
+        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
+        <button class="btn-no" onclick="answer(this,0)">No</button>
       </div>
     </div>
 
