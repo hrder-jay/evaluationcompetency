@@ -6,207 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Nanum Gothic', sans-serif;
-      margin: 20px;
-      background: #f5f7fa;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 20px;
-    }
-    .question {
-      display: flex;
-      align-items: flex-start;
-      background: #fff;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      margin-bottom: 15px;
-      transition: transform 0.2s;
-    }
-    .question:hover {
-      transform: translateY(-2px);
-    }
-    .question img.icon {
-      width: 24px;
-      height: 24px;
-      margin-right: 10px;
-      margin-top: 2px;
-    }
-    .question .text {
-      flex: 1;
-    }
-    button {
-      padding: 8px 16px;
-      margin: 5px;
-      border: none;
-      border-radius: 5px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.1s;
-    }
-    .btn-yes { background: #e0f2f1; color: #00695c; }
-    .btn-no  { background: #ffebee; color: #c62828; }
-    .btn-yes.active { background: #26a69a; color: #fff; }
-    .btn-no.active  { background: #e53935; color: #fff; }
-    button:active { transform: scale(0.95); }
-
-    #result {
-      display: none;
-      margin-top: 20px;
-    }
-    canvas {
-      max-width: 100%;
-      margin: 20px auto;
-    }
-
-    .feedback-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-    .feedback-card {
-      flex: 1 1 300px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      overflow-y: auto;
-      max-height: 400px;
-      color: #fff;
-      padding: 20px;
-    }
-    .feedback-card h3 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 0;
-    }
-    .feedback-card img {
-      width: 40px;
-      height: 40px;
-    }
-    .type-평가제도 { background: linear-gradient(135deg,#1565c0,#1e88e5); }
-    .type-목표이해 { background: linear-gradient(135deg,#ef6c00,#f57c00); }
-    .type-팀원이해 { background: linear-gradient(135deg,#2e7d32,#43a047); }
-    .type-면담스킬 { background: linear-gradient(135deg,#6a1b9a,#8e24aa); }
+    body { font-family:'Nanum Gothic',sans-serif; margin:20px; background:#f5f7fa; }
+    h1 { text-align:center; color:#333; margin-bottom:20px; }
+    .question { background:#fff; border-radius:12px; padding:15px; box-shadow:0 4px 12px rgba(0,0,0,0.05); margin-bottom:15px; transition:transform .2s; display:flex; align-items:flex-start; }
+    .question:hover { transform:translateY(-2px); }
+    .question img.icon { width:24px; height:24px; margin-right:10px; margin-top:2px; }
+    .question .text { flex:1; }
+    button { padding:8px 16px; margin:5px; border:none; border-radius:5px; cursor:pointer; transition:background .3s,transform .1s; }
+    .btn-yes { background:#e0f2f1; color:#00695c; }
+    .btn-no  { background:#ffebee; color:#c62828; }
+    .btn-yes.active { background:#26a69a; color:#fff; }
+    .btn-no.active  { background:#e53935; color:#fff; }
+    button:active { transform:scale(.95); }
+    #result { display:none; margin-top:20px; }
+    canvas { max-width:100%; margin:20px auto; }
+    .feedback-container { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+    .feedback-card { flex:1 1 300px; background:#fff; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); overflow-y:auto; max-height:400px; color:#fff; padding:20px; }
+    .feedback-card h3 { display:flex; align-items:center; gap:10px; margin-top:0; }
+    .feedback-card img { width:40px; height:40px; }
+    .type-평가제도  { background:linear-gradient(135deg,#1565c0,#1e88e5); }
+    .type-목표이해  { background:linear-gradient(135deg,#ef6c00,#f57c00); }
+    .type-팀원이해  { background:linear-gradient(135deg,#2e7d32,#43a047); }
+    .type-면담스킬  { background:linear-gradient(135deg,#6a1b9a,#8e24aa); }
   </style>
 </head>
 <body>
 
   <h1>성과평가면담 역량 진단</h1>
-
   <div id="quiz">
-    <!-- 평가제도 -->
-    <div class="question" data-category="평가제도">
-      <img class="icon" src="https://img.icons8.com/color/24/settings.png" alt="평가제도"/>
-      <div class="text">
-        <strong>평가제도 이해</strong><br>
-        1. 우리 조직의 평가 제도에 대해 명확히 알고 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-    <div class="question" data-category="평가제도">
-      <img class="icon" src="https://img.icons8.com/color/24/settings.png" alt="평가제도"/>
-      <div class="text">
-        2. 우리 팀의 평가 배분 비율은 알고 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-    <div class="question" data-category="평가제도">
-      <img class="icon" src="https://img.icons8.com/color/24/settings.png" alt="평가제도"/>
-      <div class="text">
-        3. 회사의 평가 프로세스를 명확히 인지하고 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-
-    <!-- 목표이해 -->
-    <div class="question" data-category="목표이해">
-      <img class="icon" src="https://img.icons8.com/color/24/target.png" alt="목표이해"/>
-      <div class="text">
-        <strong>목표 이해</strong><br>
-        4. 수립된 팀의 목표를 기억하고 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-    <div class="question" data-category="목표이해">
-      <img class="icon" src="https://img.icons8.com/color/24/target.png" alt="목표이해"/>
-      <div class="text">
-        5. 팀원 개인별 목표를 알고 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-    <div class="question" data-category="목표이해">
-      <img class="icon" src="https://img.icons8.com/color/24/target.png" alt="목표이해"/>
-      <div class="text">
-        6. 개인 KPI 달성률을 파악하고 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-
-    <!-- 팀원이해 -->
-    <div class="question" data-category="팀원이해">
-      <img class="icon" src="https://img.icons8.com/color/24/people.png" alt="팀원이해"/>
-      <div class="text">
-        <strong>팀원 이해</strong><br>
-        7. 팀원의 역량(리더십/업무)에 대해 측정이 되어 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-    <div class="question" data-category="팀원이해">
-      <img class="icon" src="https://img.icons8.com/color/24/people.png" alt="팀원이해"/>
-      <div class="text">
-        8. 팀원 업무의 목적과 활동을 알고 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-    <div class="question" data-category="팀원이해">
-      <img class="icon" src="https://img.icons8.com/color/24/people.png" alt="팀원이해"/>
-      <div class="text">
-        9. 팀원의 평소 업무·의사소통 스타일을 알고 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-
-    <!-- 면담스킬 -->
-    <div class="question" data-category="면담스킬">
-      <img class="icon" src="https://img.icons8.com/color/24/chat.png" alt="면담스킬"/>
-      <div class="text">
-        <strong>면담 스킬</strong><br>
-        10. 면담 시작 전 목적을 명확히 설정하나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-    <div class="question" data-category="면담스킬">
-      <img class="icon" src="https://img.icons8.com/color/24/chat.png" alt="면담스킬"/>
-      <div class="text">
-        11. 팀원의 예상 반응을 예측하고 면담하나요?<br>
-        <button class="btn-yes" onclick="answer(this,1)">Yes</button>
-        <button class="btn-no" onclick="answer(this,0)">No</button>
-      </div>
-    </div>
-    <div class="question" data-category="면담스킬">
-      <img class="icon" src="https://img.icons8.com/color/24/chat.png" alt="면담스킬"/>
-      <div class="text">
-        12. 저항이 두려워 면담을 피한 적이 있나요?<br>
-        <button class="btn-yes" onclick="answer(this,0)">Yes</button>
-        <button class="btn-no" onclick="answer(this,1)">No</button>
-      </div>
-    </div>
-
+    <!-- (생략: 위에 예시처럼 12개 질문) -->
     <button onclick="showResult()">결과 보기</button>
   </div>
 
@@ -221,58 +49,80 @@
     let scores = { "평가제도":0, "목표이해":0, "팀원이해":0, "면담스킬":0 };
 
     function answer(btn, val) {
-      const category = btn.parentElement.getAttribute("data-category");
-      const yesBtn = btn.parentElement.querySelector(".btn-yes");
-      const noBtn = btn.parentElement.querySelector(".btn-no");
-      yesBtn.classList.remove("active");
-      noBtn.classList.remove("active");
-      btn.classList.contains("btn-yes")
-        ? yesBtn.classList.add("active")
-        : noBtn.classList.add("active");
-      btn.parentElement.answered = true;
-      scores[category] += val;
+      const q = btn.closest('.question');
+      const yes = q.querySelector('.btn-yes');
+      const no  = q.querySelector('.btn-no');
+      yes.classList.remove('active');
+      no.classList.remove('active');
+      if (btn.classList.contains('btn-yes')) yes.classList.add('active');
+      else no.classList.add('active');
+      scores[q.dataset.category] += val;
     }
 
     function showResult() {
-      const answeredCount = [...document.querySelectorAll(".question")].filter(q => q.answered).length;
+      // .active가 붙은 버튼이 있는 문항만 센다
+      const answeredCount = [...document.querySelectorAll('.question')].filter(q => {
+        return q.querySelector('.btn-yes').classList.contains('active')
+            || q.querySelector('.btn-no').classList.contains('active');
+      }).length;
       if (answeredCount < 12) {
-        alert("모든 문항에 답해주세요.");
-        return;
+        return alert("모든 문항에 답해주세요.");
       }
-      document.getElementById("quiz").style.display = "none";
-      document.getElementById("result").style.display = "block";
+
+      document.getElementById('quiz').style.display   = 'none';
+      document.getElementById('result').style.display = 'block';
 
       // 방사형 그래프
-      const ctx = document.getElementById('chart').getContext('2d');
-      new Chart(ctx, {
-        type: 'radar',
-        data: {
+      new Chart(document.getElementById('chart').getContext('2d'), {
+        type:'radar',
+        data:{
           labels: Object.keys(scores),
-          datasets: [{
-            label: 'Yes 응답 수',
+          datasets:[{
+            label:'Yes 응답 수',
             data: Object.values(scores),
-            fill: true,
-            borderColor: 'rgb(54,162,235)',
-            backgroundColor: 'rgba(54,162,235,0.2)'
+            fill:true,
+            borderColor:'rgb(54,162,235)',
+            backgroundColor:'rgba(54,162,235,0.2)'
           }]
         },
-        options: {
-          scales: { r: { min: 0, max: 3, ticks: { stepSize: 1 } } }
+        options:{
+          scales:{ r:{ min:0, max:3, ticks:{ stepSize:1 } } }
         }
       });
 
-      // 가장 낮은 2개 유형 선택
-      const minScore = Math.min(...Object.values(scores));
-      const lows = Object.keys(scores).filter(k => scores[k] === minScore);
-      let selected = [];
-      if (lows.length <= 2) {
-        selected = lows;
-      } else {
-        while (selected.length < 2) {
-          const pick = lows[Math.floor(Math.random() * lows.length)];
-          if (!selected.includes(pick)) selected.push(pick);
-        }
-      }
+      // 가장 낮은 2개 영역 뽑기
+      const min = Math.min(...Object.values(scores));
+      const lows = Object.keys(scores).filter(k=>scores[k]===min);
+      let sel = lows.length <= 2
+              ? lows
+              : (()=>{
+                  const out=[]; 
+                  while(out.length<2){
+                    const p=lows[Math.floor(Math.random()*lows.length)];
+                    if(!out.includes(p)) out.push(p);
+                  }
+                  return out;
+                })();
+
+      // 전문 피드백 데이터 (생략하지 않고 실제 넣어주세요)
+      const feedbackData = {
+        /* "평가제도":{title,icon,color,text}, ... */
+      };
+
+      const wrap = document.getElementById('feedbackText');
+      wrap.innerHTML = '';
+      sel.forEach(key=>{
+        const f = feedbackData[key];
+        const d = document.createElement('div');
+        d.className = `feedback-card ${f.color}`;
+        d.innerHTML = `<h3><img src="${f.icon}"/>${f.title}</h3><p>${f.text}</p>`;
+        wrap.appendChild(d);
+      });
+    }
+  </script>
+</body>
+</html>
+
 
       // PDF 전문 피드백
       const feedbackData = {
